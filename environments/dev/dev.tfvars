@@ -1,0 +1,6 @@
+rg_name   = "dev-rg-sejal"
+location  = "Canada Central"
+vnet_name = "dev-vnet-sejal"
+aks_name    = "dev-aks-sejal"
+dns_prefix  = "devakssejal"
+environment = "dev"
