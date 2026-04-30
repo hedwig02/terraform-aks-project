@@ -34,16 +34,19 @@ RG → VNet → Subnet → AKS → Kubernetes Deployment (Nginx)
 ## 📁 Project Structure
 
 ```
+
+And update project structure to:
+
+```md
 bootcamp2/
 │
 ├── modules/
 │   ├── rg/
 │   ├── vnet/
-│   ├── aks/
+│   └── aks/
 │
 ├── environments/
-│   ├── dev/
-│   └── prod/
+│   └── dev/
 │
 └── .gitignore
 ```
@@ -167,4 +170,4 @@ terraform destroy -var-file="dev.tfvars"
 ## 👩‍💻 Author
 
 Sejal Sakhala
-# terraform-aks-project
+# # Terraform AKS Deployment Project
