@@ -1,0 +1,84 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  serviceConnection: 'azure-spn-connec'
+
+stages:
+
+- stage: Init
+  displayName: Terraform Init
+  jobs:
+  - job: Init
+    steps:
+    - checkout: self
+
+    - task: TerraformInstaller@1
+      inputs:
+        terraformVersion: 'latest'
+
+    - task: TerraformTaskV4@4
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: 'environments/dev'
+        backendServiceArm: $(serviceConnection)
+        backendAzureRmResourceGroupName: 'demo-aks'
+        backendAzureRmStorageAccountName: 'backendstorage143'
+        backendAzureRmContainerName: 'demo'
+        backendAzureRmKey: 'dev.tfstate'
+
+---
+
+- stage: Plan
+  displayName: Terraform Plan
+  dependsOn: Init
+  jobs:
+  - job: Plan
+    steps:
+    - checkout: self
+
+    - task: TerraformInstaller@1
+      inputs:
+        terraformVersion: 'latest'
+
+    - task: TerraformTaskV4@4
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        workingDirectory: 'environments/dev'
+        commandOptions: '-var-file=dev.tfvars'
+        environmentServiceNameAzureRM: $(serviceConnection)
+
+---
+
+- stage: Apply
+  displayName: Terraform Apply
+  dependsOn: Plan
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  jobs:
+  - job: Apply
+    steps:
+    - checkout: self
+
+    - task: TerraformInstaller@1
+      inputs:
+        terraformVersion: 'latest'
+
+    - task: TerraformTaskV4@4
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        workingDirectory: 'environments/dev'
+        commandOptions: '-var-file=dev.tfvars -auto-approve'
+        environmentServiceNameAzureRM: $(serviceConnection)
