@@ -7,7 +7,7 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  serviceConnection: 'azure-spn-connec'
+  serviceConnection: 'Azure subscription 1 (90f790a2-2dbf-4bf8-82d1-7b22ed604795)'
 
 stages:
 - stage: Init
