@@ -29,7 +29,7 @@ stages:
         workingDirectory: 'environments/dev'
         backendServiceArm: $(serviceConnection)
         backendAzureRmResourceGroupName: 'demo-aks'
-        backendAzureRmStorageAccountName: 'backendstorage143'
+        backendAzureRmStorageAccountName: 'sejalbackend2026'
         backendAzureRmContainerName: 'demo'
         backendAzureRmKey: 'dev.tfstate'
 
