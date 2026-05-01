@@ -1,4 +1,4 @@
-# 🚀 Terraform AKS Deployment Project
+# 🚀 # Automate AKS Infrastructure Deployment using Terraform Modules and Azure DevOps Pipeline
 
 ## 📌 Project Overview
 
@@ -27,7 +27,7 @@ The infrastructure is designed using a modular Terraform structure:
 * AKS Cluster
 
 Flow:
-RG → VNet → Subnet → AKS → Kubernetes Deployment (Nginx)
+GitHub → Azure DevOps Pipeline → Terraform Init → Terraform Plan → Terraform Apply → AKS Cluster
 
 ---
 
